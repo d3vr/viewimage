@@ -20,9 +20,20 @@ if (typeof window.isElementVisible === 'undefined') {
         );
     }
 }
-var imgs = document.querySelectorAll(".irc_mi");
-var img = imgs.forEach(function(img){
+// var imgs = document.querySelectorAll(".irc_mi");
+// var img = imgs.forEach(function(img){
+//     if(isElementVisible(img)){
+//         window.open(img.src);
+//     }
+// });
+
+var imgNames = document.querySelectorAll("#irc_cc>div[data-item-id]");
+imgNames.forEach(function(img){
     if(isElementVisible(img)){
-        window.open(img.src);
+        console.log(img.dataset);
+        // var name = 
+        // JSON.parse(document.querySelector("img[name='"+name+"']").parentNode.nextSibling.innerHTML).ou
     }
 });
+
+// var imgs = document.querySelectorAll(".irc_mi");
