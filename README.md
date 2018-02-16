@@ -4,6 +4,6 @@ Google [removed the "View Image" button](https://twitter.com/searchliaison/statu
 Tested on Chromium 63 and Firefox 57.
 
 ## Usage
-1. [Head over here]() and drag the bookmarklet to your bookmarks bar.
+1. [Head over here](http://d3vr.github.io/viewimages) and drag the bookmarklet to your bookmarks bar.
 2. Go to Google Images, click on any image to view it, wait for the preview to finish loading, then click on the bookmarklet. The full-size photo should open on a new tab.
 3. Enjoy
