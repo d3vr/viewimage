@@ -26,3 +26,14 @@ var img = imgs.forEach(function(img){
         window.open(img.src);
     }
 });
+
+var imgDatas = document.querySelectorAll(".irc_mut");
+var imgData = imgDatas.forEach(function(imgData){
+    if(isElementVisible(imgData)){
+		var image = new Image();
+        image.src = imgData.currentSrc;
+
+        var w = window.open("");
+        w.document.write(image.outerHTML);
+    }
+});
