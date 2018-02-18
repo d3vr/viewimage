@@ -23,20 +23,10 @@ function isElementVisiblePolyfill(el) {
     );
 }
 
-// var imgs = document.querySelectorAll(".irc_mi");
-// var img = imgs.forEach(function(img){
-//     if(isElementVisible(img)){
-//         window.open(img.src);
-//     }
-// });
-
 var imgNames = document.querySelectorAll("#irc_cc>div[data-item-id]");
 imgNames.forEach(function(img){
     if(isElementVisible(img)){
-        console.log(img.dataset);
-        // var name = 
-        // JSON.parse(document.querySelector("img[name='"+name+"']").parentNode.nextSibling.innerHTML).ou
+        var img_json = JSON.parse(document.querySelector("img[name='"+img.dataset.itemId+"']").parentNode.nextSibling.childNodes[0].nodeValue);
+        window.open(img_json.ou);
     }
 });
-
-// var imgs = document.querySelectorAll(".irc_mi");
