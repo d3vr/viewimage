@@ -26,7 +26,7 @@ function isElementVisiblePolyfill(el) {
 var imgNames = document.querySelectorAll("#irc_cc>div[data-item-id]");
 imgNames.forEach(function(img){
     if(isElementVisible(img)){
-        var img_json = JSON.parse(document.querySelector("img[name='"+img.dataset.itemId+"']").parentNode.nextSibling.childNodes[0].nodeValue);
+        var img_json = JSON.parse(document.getElementById(img.dataset.itemId).parentNode.nextSibling.childNodes[0].nodeValue);
         window.open("https://www.google.com/searchbyimage?image_url=" + img_json.ou);
     }
 });
