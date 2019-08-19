@@ -39,8 +39,9 @@ if(!document.querySelector("#viewimage_version")){
     document.body.appendChild(htmlToElement('<a id="viewimage_version" href="https://d3vr.github.io/viewimage/" style="position:fixed; z-index:999; top: 0; right:0;"><img src="https://d3vr.me/viewimage/version.php?v='+version+'" height="30"></a>'))
 }
 
-var imgNames = document.querySelectorAll("#irc_cc>div[data-item-id]");
-imgNames.forEach(function(img){
+var imgNames = document.querySelectorAll("#irc_cc div[data-item-id]");
+for(var i = 0; i<imgNames.length; i++){
+    var img = imgNames[i];
     if(isElementVisible(img)){
         var itemId = img.dataset.itemId;
         var reference_element = document.getElementById(itemId);
@@ -57,5 +58,7 @@ imgNames.forEach(function(img){
 
         // Open the image source in a new tab
         window.open("https://www.google.com/searchbyimage?image_url=" + JSON.parse(img_json).ou);
+
+        break;
     }
-});
+};
