@@ -1,4 +1,4 @@
-var version = "1.3";
+var version = "1.4";
 
 if (typeof window.isElementVisible === 'undefined') {
     window.isElementVisible = isElementVisiblePolyfill;
