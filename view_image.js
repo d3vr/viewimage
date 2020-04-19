@@ -1,4 +1,4 @@
-var version = "1.4";
+var version = "1.5";
 
 if (typeof window.isElementVisible === 'undefined') {
     window.isElementVisible = isElementVisiblePolyfill;
@@ -39,27 +39,8 @@ if(!document.querySelector("#viewimage_version")){
     document.body.appendChild(htmlToElement('<a id="viewimage_version" href="https://d3vr.github.io/viewimage/" style="position:fixed; z-index:999; top: 0; right:0;"><img src="https://d3vr.me/viewimage/version.php?v='+version+'" height="30"></a>'))
 }
 
-var imgNames = document.querySelectorAll("#irc_cc div[data-item-id]");
-for(var i = 0; i<imgNames.length; i++){
-    var img = imgNames[i];
+// Find the selected image
+var img = document.evaluate('//div[@data-query]//img[not(contains(@src, "data:"))]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue;
 
-    if(isElementVisible(img)){
-        var itemId = img.dataset.itemId;
-        var reference_element = document.getElementById(itemId);
-        // Find the text node containing the itemId (which has the JSON we need)
-        var img_json = document.evaluate('//*[text()[contains(.,"'+itemId+'")]]' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue;
-
-        // This is a related image
-        if(!img_json){
-            img_json = document.querySelectorAll("[data-item-id='"+itemId+"']")[1].childNodes[1].childNodes[0].nodeValue;
-        // This is a main image
-        }else{
-            img_json = img_json.childNodes[0].nodeValue;
-        }
-
-        // Open the image source in a new tab
-        window.open(JSON.parse(img_json).ou);
-
-        break;
-    }
-};
+// Open the image source in a new tab
+window.open(img.src);
