@@ -1,4 +1,4 @@
-var version = "1.5";
+var version = "1.5.1";
 
 if (typeof window.isElementVisible === 'undefined') {
     window.isElementVisible = isElementVisiblePolyfill;
@@ -35,13 +35,28 @@ function htmlToElement(html) {
     return template.content.firstChild;
 }
 
+// Only select visible image
+function open_visible_image(imgs){
+    var img = imgs.iterateNext();
+    if(img){
+        if(isElementVisiblePolyfill(img)){
+            // Open the image source in a new tab
+            window.open("https://www.google.com/searchbyimage?image_url=" + img.src);
+
+            return true;
+        }else{
+            open_visible_image(imgs);
+        }
+    }else{
+        return false;
+    }
+}
+
 if(!document.querySelector("#viewimage_version")){
     document.body.appendChild(htmlToElement('<a id="viewimage_version" href="https://d3vr.github.io/viewimage/" style="position:fixed; z-index:999; top: 0; right:0;"><img src="https://d3vr.me/viewimage/version.php?v='+version+'" height="30"></a>'))
 }
 
-
 // Find the selected image
-var img = document.evaluate('//div[@data-query]//img[not(contains(@src, "data:"))]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue;
+var imgs = document.evaluate('//div[@data-query]//img[not(contains(@src, "data:"))]', document, null, XPathResult.ANY_TYPE, null );
 
-// Open the image source in a new tab
-window.open("https://www.google.com/searchbyimage?image_url=" + img.src);
+open_visible_image(imgs);
