@@ -1,4 +1,4 @@
-var version = "1.5.5";
+var version = "1.6";
 
 if (typeof window.isElementVisible === 'undefined') {
     window.isElementVisible = isElementVisiblePolyfill;
@@ -7,22 +7,12 @@ if (typeof window.isElementVisible === 'undefined') {
 // Handy function from StackOverflow: https://stackoverflow.com/a/15203639/2733526
 // Used to detect if an element is visible in the viewport
 function isElementVisiblePolyfill(el) {
-    var rect     = el.getBoundingClientRect(),
-        vWidth   = window.innerWidth || doc.documentElement.clientWidth,
-        vHeight  = window.innerHeight || doc.documentElement.clientHeight,
-        efp      = function (x, y) { return document.elementFromPoint(x, y) };
-
-    // Return false if it's not in the viewport
-    if (rect.right < 0 || rect.bottom < 0
-        || rect.left > vWidth || rect.top > vHeight)
-        return false;
-
-    // Return true if any of its four corners are visible
+    const rect = el.getBoundingClientRect();
     return (
-        el.contains(efp(rect.left,  rect.top))
-        ||  el.contains(efp(rect.right, rect.top))
-        ||  el.contains(efp(rect.right, rect.bottom))
-        ||  el.contains(efp(rect.left,  rect.bottom))
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
 }
 
@@ -38,6 +28,7 @@ function htmlToElement(html) {
 // Only select visible image
 function open_visible_image(imgs){
     var img = imgs.iterateNext();
+    console.log(img);
     if(img){
         if(isElementVisiblePolyfill(img)){
             // Open the image source in a new tab
