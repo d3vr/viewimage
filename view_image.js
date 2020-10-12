@@ -1,4 +1,4 @@
-var version = "1.6";
+var version = "1.6.1";
 
 if (typeof window.isElementVisible === 'undefined') {
     window.isElementVisible = isElementVisiblePolyfill;
@@ -28,11 +28,35 @@ function htmlToElement(html) {
 // Only select visible image
 function open_visible_image(imgs){
     var img = imgs.iterateNext();
-    console.log(img);
+    console.log([img.src, img]);
     if(img){
         if(isElementVisiblePolyfill(img)){
             // Open the image source in a new tab
-            window.open(img.src);
+            if(img.src.includes('data:image')){
+                const contentType = img.src.substring(5, img.src.indexOf(';'));
+
+                const byteCharacters = atob(img.src.substring(img.src.indexOf(',')+1));
+                const byteArrays = [];
+
+                for (offset = 0; offset < byteCharacters.length; offset += 1024) {
+                    const slice = byteCharacters.slice(offset, offset + 1024);
+
+                    const byteNumbers = new Array(slice.length);
+                    for (i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+
+                    const byteArray = new Uint8Array(byteNumbers);
+
+                    byteArrays.push(byteArray);
+                }
+                const blob = new Blob(byteArrays, {type: contentType});
+                const blobUrl = URL.createObjectURL(blob);
+
+                window.open(blobUrl, '_blank');
+            }else{
+                window.open(img.src);
+            }
 
             return true;
         }else{
@@ -48,6 +72,7 @@ if(!document.querySelector("#viewimage_version")){
 }
 
 // Find the selected image
-var imgs = document.evaluate('//div[@data-query]//img[not(contains(@src, "data:"))]', document, null, XPathResult.ANY_TYPE, null );
+// var imgs = document.evaluate('//div[@data-query]//img[not(contains(@src, "data:"))]', document, null, XPathResult.ANY_TYPE, null );
+var imgs = document.evaluate('//div[@data-query]//img', document, null, XPathResult.ANY_TYPE, null );
 
 open_visible_image(imgs);
